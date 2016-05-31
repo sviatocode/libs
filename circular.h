@@ -25,12 +25,12 @@ public:
         if (wpos > new_wpos)  // circular copy ----n---w---
         {
             size_t first_part = buf_size - wpos;
-            memcpy(&buf[wpos], data, first_part);
-            if (new_wpos > 0) memcpy(buf, &data[first_part], new_wpos);
+            memcpy(&buf[wpos], data, first_part*sizeof(buf_type));
+            if (new_wpos > 0) memcpy(buf, &data[first_part], new_wpos*sizeof(buf_type));
         }
         else // ---w---n---
         {
-            memcpy(&buf[wpos], data, len);
+            memcpy(&buf[wpos], data, len*sizeof(buf_type));
         }
         wpos = new_wpos;
         return true;
@@ -50,12 +50,12 @@ public:
         if (rpos > new_rpos)
         {
             size_t first_part = buf_size - rpos;
-            memcpy(ret, &buf[rpos], first_part);
-            if (new_rpos > 0) memcpy(&ret[first_part], buf, new_rpos);
+            memcpy(ret, &buf[rpos], first_part*sizeof(buf_type));
+            if (new_rpos > 0) memcpy(&ret[first_part], buf, new_rpos*sizeof(buf_type));
         }
         else
         {
-            memcpy(ret, &buf[rpos], rlen);
+            memcpy(ret, &buf[rpos], rlen*sizeof(buf_type));
         }
         rpos = new_rpos;
         return rlen;
